@@ -10,11 +10,11 @@ import { PUBLIC_BACKEND_BASE_URL } from '$env/static/public';
 //   "userId": ""
 // }
 
-// export function logOut() {
-//   localStorage.setItem("auth", JSON.stringify(emptyAuth));
-//   createLoginStore.set(false)
-//   return true
-// }
+export function logOut() {
+  localStorage.setItem("auth", JSON.stringify(emptyAuth));
+  // createLoginStore.set(false)
+  return true
+}
 
 // export function getUserId() {
 //   const auth = localStorage.getItem("auth")
@@ -67,21 +67,34 @@ import { PUBLIC_BACKEND_BASE_URL } from '$env/static/public';
 //   }
 // }
 
-// export async function authenticateUser(username, password) {
-//   const resp = await fetch(
-//     PUBLIC_BACKEND_BASE_URL + '/api/collections/users/auth-with-password',
-//     {
-//       method: 'POST',
-//       mode: 'cors',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify({
-//         identity: username,
-//         password
-//       })
-//     }
-//   );
+export async function authenticateUser(email, password) {
+  const resp = await fetch(
+    PUBLIC_BACKEND_BASE_URL + '/sign-in',
+    {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email,
+        password
+      })
+    }
+  )
+  const res = await resp.json();
+
+  if(resp.status == 200){
+    return {
+      success: true,
+      res: res
+    };
+  }
+  return {
+    success:false,
+    res: res
+  };
+};
 
 //   const res = await resp.json();
 

@@ -1,5 +1,5 @@
 <script>
-    import { authenticateUser, createLoginStore } from "../../utils/auth";
+    import { authenticateUser } from "../../../utils/auth";
     import { goto } from '$app/navigation'; 
 
   
@@ -10,18 +10,16 @@
       //Sections below are as --Login Function--
       async function Login(evt) {
         const userData = {
-          username: evt.target['username'].value,        
+          email: evt.target['username'].value,        
           password: evt.target['password'].value,
         };
   
-        // console.log("123")
-        const res = await authenticateUser(userData.username, userData.password)
+        
+        const resp = await authenticateUser(userData.email, userData.password)
       
-      //to track whether he/she is authenticated user, using authenticated function
-  
-        if (res.success) {
+        if (resp.success) {
           postLogin();
-      //Unhappy path 
+      
         } else {
           throw 'Please check your username/password';
         
@@ -43,10 +41,9 @@
       Password:
       <input type="password" name="password" required>
     </label>
-    <button on:click={createLoginStore} id="loginButton" style="position:absolute; right: 700px">Log In</button>
-  
+    <button id="loginButton" style="position:absolute; right: 700px">Log In</button>
 </form>
-    
+<!-- on:click={createLoginStore} -->
 
   
   </div>
